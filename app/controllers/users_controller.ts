@@ -15,7 +15,7 @@ export default class UsersController {
     const payload = await request.validateUsing(CreatUserValidator)
     //create new user
     const user = new User()
-    user.fullName = payload.fullname
+    user.fullName = payload.fullName
     user.email = payload.email
     //hash password before saving
     user.password = await hash.make(payload.password)
@@ -39,8 +39,8 @@ export default class UsersController {
     //validate request data
     const payload = await request.validateUsing(UpdateUserValidator)
     //update user details
-    if (payload.fullname) {
-      user.fullName = payload.fullname
+    if (payload.fullName) {
+      user.fullName = payload.fullName
     }
     if (payload.email) {
       user.email = payload.email

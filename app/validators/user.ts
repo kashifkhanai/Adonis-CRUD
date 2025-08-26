@@ -3,7 +3,7 @@ import vine from '@vinejs/vine'
 
 export const CreatUserValidator = vine.compile(
   vine.object({
-    fullname: vine.string().trim().minLength(3).maxLength(255).nullable(),
+    fullName: vine.string().trim().minLength(3).maxLength(255).nullable(),
     email: vine
       .string()
       .email()
@@ -18,7 +18,7 @@ export const CreatUserValidator = vine.compile(
 // validator for updating existing user
 export const UpdateUserValidator = vine.compile(
   vine.object({
-    fullname: vine.string().trim().minLength(3).optional(),
+    fullName: vine.string().trim().minLength(3).optional(),
     email: vine.string().email().optional(),
     password: vine.string().minLength(8).maxLength(180).optional(),
   })
