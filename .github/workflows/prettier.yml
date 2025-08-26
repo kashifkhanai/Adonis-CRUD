@@ -1,4 +1,4 @@
-name: Prettier Auto-Format
+name: Prettier Format Check
 
 on:
   pull_request:
@@ -9,29 +9,36 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      # 1️⃣ Checkout the PR branch
       - name: Checkout code
         uses: actions/checkout@v4
         with:
-          persist-credentials: true # important for push
+          ref: ${{ github.head_ref }}
+          fetch-depth: 0
 
+      # 2️⃣ Setup Node.js
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 20
 
+      # 3️⃣ Install dependencies
       - name: Install dependencies
         run: npm install
 
-      - name: Run Prettier Write
+      # 4️⃣ Run Prettier Check
+      - name: Run Prettier Check
+        run: npx prettier --check .
+
+      # 5️⃣ Auto-format code
+      - name: Run Prettier Auto-Format
         run: npx prettier --write .
 
-      - name: Configure Git
+      # 6️⃣ Commit auto-formatted changes
+      - name: Commit and push changes
         run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-
-      - name: Commit & Push Prettier fixes
-        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git add .
-          git commit -m "chore: Auto-format code via Prettier" || echo "No changes to commit"
-          git push origin ${{ github.ref }}
+          git commit -m "chore: auto-format code via Prettier" || echo "No changes to commit"
+          git push origin HEAD:${{ github.head_ref }}
