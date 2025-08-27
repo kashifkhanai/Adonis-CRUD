@@ -1,4 +1,5 @@
 name: Prettier Auto-Format
+
 on:
   pull_request:
     branches: [ main, dev ]
