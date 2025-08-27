@@ -6,16 +6,12 @@ on:
 jobs:
   eslint:
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
     steps:
       # 1️⃣ Checkout PR branch
       - name: Checkout code
         uses: actions/checkout@v4
         with:
-          ref: ${{ github.head_ref }}
-          fetch-depth: 0
-          token: ${{ secrets.GITHUB_TOKEN }}
+          fetch-depth: 1
 
       # 2️⃣ Setup Node.js with caching
       - name: Setup Node.js
@@ -28,43 +24,31 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      # 4️⃣ Run ESLint check (without fixes)
-      - name: Run ESLint check
-        id: eslint_check
+      # 4️⃣ Run ESLint and capture all errors
+      - name: Run ESLint
+        id: eslint
         run: |
-          npm run lint
-          echo "lint_failed=$?" >> $GITHUB_OUTPUT
-        continue-on-error: true
+          # Create a temporary file to store ESLint output
+          ESLINT_OUTPUT=$(mktemp)
+          
+          # Run ESLint and capture both stdout and stderr
+          npm run lint > "$ESLINT_OUTPUT" 2>&1
+          EXIT_CODE=$?
+          
+          # Always display the full ESLint output
+          echo "ESLint Results:"
+          cat "$ESLINT_OUTPUT"
+          
+          # Save exit code for later use
+          echo "exit_code=$EXIT_CODE" >> $GITHUB_OUTPUT
+          
+          # Clean up temporary file
+          rm "$ESLINT_OUTPUT"
 
-      # 5️⃣ Skip if no issues found
-      - name: No ESLint issues found
-        if: steps.eslint_check.outputs.lint_failed == 0
-        run: echo "✅ ESLint passed - no issues found"
-
-      # 6️⃣ Run ESLint auto-fix (only if issues found)
-      - name: Run ESLint auto-fix
-        if: steps.eslint_check.outputs.lint_failed != 0
-        run: npm run lint:fix
-
-      # 7️⃣ Commit and push changes (if fixes were applied)
-      - name: Commit and push fixes
-        if: steps.eslint_check.outputs.lint_failed != 0
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      # 5️⃣ Fail job if ESLint found errors
+      - name: Fail on ESLint errors
+        if: steps.eslint.outputs.exit_code != 0
         run: |
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git add .
-          if ! git diff --cached --quiet; then
-            git commit -m "chore: auto-fix ESLint issues"
-            git push origin HEAD:${{ github.head_ref }}
-            echo "✅ ESLint fixes pushed"
-          else
-            echo "⚠️ ESLint found issues but couldn't auto-fix"
-            exit 1
-          fi
-
-      # 8️⃣ Final ESLint check (after fixes)
-      - name: Verify ESLint fixes
-        if: steps.eslint_check.outputs.lint_failed != 0
-        run: npm run lint
+          echo "❌ ESLint found errors (exit code: ${{ steps.eslint.outputs.exit_code }})"
+          echo "Please fix the issues shown above before merging"
+          exit 1
