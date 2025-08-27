@@ -1,6 +1,7 @@
 import User from '#models/user'
-import hash from '@adonisjs/core/services/hash'
+import { CreatUserInterface, UpdateUserInterface } from '#validators/user'
 
+// get all users
 export const listing = async () => {
   try {
     return await User.query()
@@ -8,24 +9,16 @@ export const listing = async () => {
     throw new Error(`Error retrieving users: ${error.message}`)
   }
 }
-
-export const createUser = async (payload: {
-  fullName: string
-  email: string
-  password: string
-}) => {
+// create new user
+export const createUser = async (payload: CreatUserInterface) => {
   try {
-    const user = new User()
-    user.fullName = payload.fullName
-    user.email = payload.email
-    user.password = await hash.make(payload.password)
-    await user.save()
+    const user = await User.create(payload)
     return user
   } catch (error) {
     throw new Error(`Error creating user: ${error.message}`)
   }
 }
-
+// get user by id
 export const getUserById = async (id: number) => {
   try {
     const user = await User.find(id)
@@ -35,32 +28,21 @@ export const getUserById = async (id: number) => {
     throw new Error(`Error retrieving user: ${error.message}`)
   }
 }
-
-export const updateUser = async (
-  id: number,
-  payload: Partial<{ fullName: string; email: string; password: string }>
-) => {
+// update user
+export const updateUser = async (id: number, payload: UpdateUserInterface) => {
   try {
-    const user = await User.find(id)
-    if (!user) throw new Error('User not found')
+    const user = await getUserById(id)
 
-    if (payload.fullName) user.fullName = payload.fullName
-    if (payload.email) user.email = payload.email
-    if (payload.password) user.password = await hash.make(payload.password)
-
-    await user.save()
-    return user
+    return await user.merge(payload).save()
   } catch (error) {
     throw new Error(`Error updating user: ${error.message}`)
   }
 }
-
+//
 export const deleteUser = async (id: number) => {
   try {
-    const user = await User.find(id)
-    if (!user) throw new Error('User not found')
+    const user = await getUserById(id)
     await user.delete()
-    return true
   } catch (error) {
     throw new Error(`Error deleting user: ${error.message}`)
   }
