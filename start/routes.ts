@@ -15,5 +15,4 @@ router.get('/', async () => {
   }
 })
 
-// CRUD routes for User (Lazy import)
-router.resource('users', () => import('#controllers/users_controller')).apiOnly()
+import '#start/routes/user_route'
