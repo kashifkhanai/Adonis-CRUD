@@ -1,0 +1,162 @@
+{
+	"info": {
+		"_postman_id": "34cdc555-c003-4047-89fe-0dc97936529a",
+		"name": "AdonisJS_CRUD",
+		"description": "Collection for testing all User API endpoints in Adonis v6 project",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "47382945",
+		"_collection_link": "https://mkashifkhanai-8284598.postman.co/workspace/2f4212b9-7d38-407a-8afb-8f0732fdc86e/collection/47382945-34cdc555-c003-4047-89fe-0dc97936529a?action=share&source=collection_link&creator=47382945"
+	},
+	"item": [
+		{
+			"name": "Users",
+			"item": [
+				{
+					"name": "Create user",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"fullName\": \"Kashif khan\",\n  \"email\": \"kashif.khan@example.com\"\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{adonis_CRUD}}/api/user/",
+							"host": [
+								"{{adonis_CRUD}}"
+							],
+							"path": [
+								"api",
+								"user",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List Users (with Pagination)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{adonis_CRUD}}/api/user/listing?page=1&limit=10",
+							"host": [
+								"{{adonis_CRUD}}"
+							],
+							"path": [
+								"api",
+								"user",
+								"listing"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "limit",
+									"value": "10"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Single User",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{adonis_CRUD}}/api/user/3",
+							"host": [
+								"{{adonis_CRUD}}"
+							],
+							"path": [
+								"api",
+								"user",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update User",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"fullName\" :\"Ali Khan\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:3333/api/user/3",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "3333",
+							"path": [
+								"api",
+								"user",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete User",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"fullName\" :\"Ali Khan\"\n}"
+						},
+						"url": {
+							"raw": "http://127.0.0.1:3333/api/user/3",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "3333",
+							"path": [
+								"api",
+								"user",
+								"3"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "This will hold all user-related endpoints: `create`, `list`, `update`, `delete`."
+		}
+	],
+	"variable": [
+		{
+			"key": "adonis_CRUD",
+			"value": "http://127.0.0.1:3333",
+			"type": "default"
+		}
+	]
+}
