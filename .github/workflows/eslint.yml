@@ -52,3 +52,4 @@ jobs:
           echo "❌ ESLint found errors (exit code: ${{ steps.eslint.outputs.exit_code }})"
           echo "Please fix the issues shown above before merging"
           exit 1
+
