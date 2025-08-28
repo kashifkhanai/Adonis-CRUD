@@ -7,7 +7,12 @@ export default class UsersController {
   //get all user.....................
   public async allUser(ctx: HttpContext) {
     try {
-      const users = await listing()
+      const page = Number(ctx.request.input('page', 1)) // default = 1
+      const rawLimit = ctx.request.input('limit')
+      const limit = rawLimit ? Number(rawLimit) : undefined
+
+      const users = await listing(page, limit)
+
       return SuccessService.send(ctx, 'USER_LISTED', users)
     } catch (error) {
       return ErrorService.handleError(ctx, error)

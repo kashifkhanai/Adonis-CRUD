@@ -1,10 +1,17 @@
 import User from '#models/user'
 import { CreatUserInterface, UpdateUserInterface } from '#validators/user'
+import paginationConfig from '#config/pagination'
 
 // get all users
-export const listing = async () => {
+export const listing = async (page: number = 1, limit?: number) => {
   try {
-    return await User.query()
+    const pageNum = Number(page) || 1
+    let perPage = limit && limit > 0 ? Math.floor(limit) : paginationConfig.defaultLimit
+    //cap to max length
+    if (perPage > paginationConfig.maxLimit) {
+      perPage = paginationConfig.maxLimit
+    }
+    return await User.query().paginate(pageNum, perPage)
   } catch (error: any) {
     throw new Error(`Error retrieving users: ${error.message}`)
   }

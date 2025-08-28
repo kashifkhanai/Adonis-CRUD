@@ -18,13 +18,15 @@ export class SuccessService {
   public static send(
     ctx: HttpContext,
     key: keyof typeof SuccessService.messages,
-    data: any = null
+    data: any = null,
+    meta: any = null
   ) {
     const res = this.messages[key]
     return ctx.response.status(res.Status).json({
       Status: true,
       massage: res.message,
       data,
+      ...(meta && { meta }),
     })
   }
 }
