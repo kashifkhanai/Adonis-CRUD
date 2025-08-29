@@ -5,13 +5,8 @@ import paginationConfig from '#config/pagination'
 // get all users
 export const listing = async (page: number = 1, limit?: number) => {
   try {
-    const pageNum = Number(page) || 1
-    let perPage = limit && limit > 0 ? Math.floor(limit) : paginationConfig.defaultLimit
-    //cap to max length
-    if (perPage > paginationConfig.maxLimit) {
-      perPage = paginationConfig.maxLimit
-    }
-    return await User.query().paginate(pageNum, perPage)
+    const perPage = Math.min(limit || paginationConfig.defaultLimit, paginationConfig.maxLimit)
+    return await User.query().paginate(page, perPage)
   } catch (error: any) {
     throw new Error(`Error retrieving users: ${error.message}`)
   }
