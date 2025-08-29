@@ -10,8 +10,10 @@ export const CreatUserValidator = vine.compile(
       .email()
       .unique(async (db, value) => {
         const user = await db.from('users').where('email', value).first()
+
         return !user
       }),
+    password: vine.string().minLength(8).maxLength(180),
   })
 )
 export type CreatUserInterface = Infer<typeof CreatUserValidator>
@@ -21,6 +23,7 @@ export const UpdateUserValidator = vine.compile(
   vine.object({
     fullName: vine.string().trim().minLength(3).optional(),
     email: vine.string().email().optional(),
+    password: vine.string().minLength(8).maxLength(180).optional(),
   })
 )
 export type UpdateUserInterface = Infer<typeof UpdateUserValidator>
