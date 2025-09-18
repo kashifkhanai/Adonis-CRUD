@@ -1,13 +1,24 @@
 import { HttpContext } from '@adonisjs/core/http'
 
 export class SuccessService {
-  //predefine sucess masges with http code
+  // 🔹 Predefined success messages with HTTP status codes
   private static messages = {
+    // ------------------------
+    // 🔹 User Management
+    // ------------------------
     USER_CREATED: { message: 'User created successfuly', Status: 201 },
     USER_LISTED: { message: 'User retrive successfuly', Status: 200 },
     USER_UPDATED: { message: 'User updated successfuly', Status: 200 },
     USER_DELETED: { message: 'User Deleted Successfuly', Status: 200 },
-    // Add more predefined success messages here
+
+    // ------------------------
+    // 🔹 Authentication
+    // ------------------------
+    REGISTER_SUCCESS: { message: 'User registered successfully', Status: 201 },
+    LOGIN_SUCCESS: { message: 'User login successful', Status: 200 },
+    LOGOUT_SUCCESS: { message: 'User logout successful', Status: 200 },
+    NO_ACTIVE_SESSION: { message: 'No active session', Status: 200 },
+    USER_RETRIEVED: { message: 'User retrieved successfully', Status: 200 },
   }
   /**
    *
