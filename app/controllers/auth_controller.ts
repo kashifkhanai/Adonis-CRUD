@@ -61,16 +61,18 @@ export default class AuthController {
 
   // 🔹 Current logged-in user
   public async me(ctx: HttpContext) {
-    try {
-      const user = ctx.auth.use('api').user
+    console.log('✅ /me route hit hua')
+    console.log('ctx.auth.user:', ctx.auth.user)
 
-      if (!user) {
-        return ErrorService.handleError(ctx, 'E_UNAUTHORIZED_ACCESS')
-      }
-
-      return SuccessService.send(ctx, 'USER_RETRIEVED', user.serialize())
-    } catch (error) {
-      return ErrorService.handleError(ctx, error)
+    const user = ctx.auth.user
+    if (!user) {
+      return ctx.response.status(401).json({ status: false, message: 'Unauthorized' })
     }
+
+    return SuccessService.send(ctx, 'USER_RETRIEVED', {
+      id: user.id,
+      fullName: user.fullName,
+      email: user.email,
+    })
   }
 }

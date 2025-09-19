@@ -6,19 +6,30 @@ export class SuccessService {
     // ------------------------
     // 🔹 User Management
     // ------------------------
-    USER_CREATED: { message: 'User created successfuly', Status: 201 },
-    USER_LISTED: { message: 'User retrive successfuly', Status: 200 },
-    USER_UPDATED: { message: 'User updated successfuly', Status: 200 },
-    USER_DELETED: { message: 'User Deleted Successfuly', Status: 200 },
+    USER_CREATED: { message: 'User created successfuly', status: 201 },
+    USER_LISTED: { message: 'User retrive successfuly', status: 200 },
+    USER_UPDATED: { message: 'User updated successfuly', status: 200 },
+    USER_DELETED: { message: 'User Deleted Successfuly', status: 200 },
 
     // ------------------------
     // 🔹 Authentication
     // ------------------------
-    REGISTER_SUCCESS: { message: 'User registered successfully', Status: 201 },
-    LOGIN_SUCCESS: { message: 'User login successful', Status: 200 },
-    LOGOUT_SUCCESS: { message: 'User logout successful', Status: 200 },
-    NO_ACTIVE_SESSION: { message: 'No active session', Status: 200 },
-    USER_RETRIEVED: { message: 'User retrieved successfully', Status: 200 },
+    REGISTER_SUCCESS: { message: 'User registered successfully', status: 201 },
+    LOGIN_SUCCESS: { message: 'User login successful', status: 200 },
+    LOGOUT_SUCCESS: { message: 'User logout successful', status: 200 },
+    NO_ACTIVE_SESSION: { message: 'No active session', status: 200 },
+    USER_RETRIEVED: { message: 'User retrieved successfully', status: 200 },
+
+    // ------------------------
+    // 🔹 todos
+    // ------------------------
+    TODO_CREATED: { message: 'Todo created successfully', status: 201 },
+    TODOS_LISTED: { message: 'Todos retrieved successfully', status: 200 },
+    TODO_DETAIL: { message: 'Todo detail retrieved successfully', status: 200 },
+    TODO_UPDATED: { message: 'Todo updated successfully', status: 200 },
+    TODO_DELETED: { message: 'Todo deleted successfully', status: 200 },
+    TODO_USER: { message: 'Todo owner retrieved successfully', status: 200 },
+    USER_WITH_TODOS: { message: 'User with todos retrieved successfully', status: 200 },
   }
   /**
    *
@@ -33,9 +44,9 @@ export class SuccessService {
     meta: any = null
   ) {
     const res = this.messages[key]
-    return ctx.response.status(res.Status).json({
-      Status: true,
-      massage: res.message,
+    return ctx.response.status(res.status).json({
+      status: true,
+      message: res.message,
       data,
       ...(meta && { meta }),
     })
