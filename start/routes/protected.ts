@@ -8,8 +8,6 @@ router
   .group(() => {
     // Auth routes
     router.post('/logout', [AuthController, 'logout'])
-    router.get('/me', [AuthController, 'me'])
-
     // Todo routes
     router.get('/todos', [TodoController, 'index'])
     router.post('/todos', [TodoController, 'store'])
