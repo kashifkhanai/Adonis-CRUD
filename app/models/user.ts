@@ -12,6 +12,11 @@ const AuthFinder = withAuthFinder(() => hash.use('scrypt'), {
   passwordColumnName: 'password',
 })
 
+export enum UserRole {
+  USER = 0,
+  ADMIN = 1,
+}
+
 export default class User extends compose(BaseModel, AuthFinder) {
   @column({ isPrimary: true })
   declare id: number
@@ -26,7 +31,7 @@ export default class User extends compose(BaseModel, AuthFinder) {
   declare password: string
 
   @column()
-  declare role: string
+  declare role: UserRole
 
   @hasMany(() => Todo)
   declare todos: HasMany<typeof Todo>

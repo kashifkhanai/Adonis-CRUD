@@ -3,6 +3,7 @@ import { createUser } from '#services/user_service'
 import type { HttpContext } from '@adonisjs/core/http'
 import { CreatUserValidator } from '#validators/user'
 import { SuccessService } from '#services/success_service'
+import { UserRole } from '#models/user'
 
 export default class AdminController {
   // Create new admin (only admin can access this route via  middleware)
@@ -11,7 +12,7 @@ export default class AdminController {
       const payload = await ctx.request.validateUsing(CreatUserValidator)
       const adminUser = await createUser({
         ...payload,
-        role: 'admin',
+        role: UserRole.ADMIN,
       } as any)
 
       return SuccessService.send(ctx, 'ADMIN_CREATED', adminUser)

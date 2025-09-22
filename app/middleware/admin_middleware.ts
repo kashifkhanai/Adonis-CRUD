@@ -1,3 +1,4 @@
+import { UserRole } from '#models/user'
 import type { HttpContext } from '@adonisjs/core/http'
 import type { NextFn } from '@adonisjs/core/types/http'
 
@@ -9,19 +10,11 @@ export default class AdminMiddleware {
     // Use the 'api' guard
     const api = ctx.auth.use('api')
 
-    // Check if the user is authenticated
-    if (!api.isAuthenticated) {
-      return ctx.response.unauthorized({ message: 'You are not authroized for this!' })
-    }
-
     // Check user exist
-    const user = api.user
-    if (!user) {
-      return ctx.response.unauthorized({ message: 'You are not authroized for this!' })
-    }
+    const user = await api.getUserOrFail()
 
     // Check if the user is an admin
-    if (user.role !== 'admin') {
+    if (user.role !== UserRole.ADMIN) {
       return ctx.response.unauthorized({ message: 'You are not authroized for this!' })
     }
 

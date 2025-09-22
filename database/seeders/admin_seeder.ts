@@ -7,7 +7,7 @@ export default class AdminSeeder extends BaseSeeder {
       fullName: 'Super Admin',
       email: 'admin@example.com',
       password: 'admin123',
-      role: 'admin',
+      role: 1,
     })
   }
 }

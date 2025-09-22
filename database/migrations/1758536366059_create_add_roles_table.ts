@@ -6,7 +6,13 @@ export default class extends BaseSchema {
   async up() {
     this.schema.alterTable(this.tableName, (table) => {
       //add role column to users table
-      table.string('role').nullable().defaultTo('user')
+      /**
+       * Roles mapping:
+       * 0 = user
+       * 1 = admin
+       * 2 = moderator (future)
+       */
+      table.tinyint('role').nullable().defaultTo(0)
     })
   }
 
