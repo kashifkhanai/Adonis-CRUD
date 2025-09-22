@@ -58,21 +58,4 @@ export default class AuthController {
       return ErrorService.handleError(ctx, error)
     }
   }
-
-  // 🔹 Current logged-in user
-  public async me(ctx: HttpContext) {
-    console.log('✅ /me route hit hua')
-    console.log('ctx.auth.user:', ctx.auth.user)
-
-    const user = ctx.auth.user
-    if (!user) {
-      return ctx.response.status(401).json({ status: false, message: 'Unauthorized' })
-    }
-
-    return SuccessService.send(ctx, 'USER_RETRIEVED', {
-      id: user.id,
-      fullName: user.fullName,
-      email: user.email,
-    })
-  }
 }
