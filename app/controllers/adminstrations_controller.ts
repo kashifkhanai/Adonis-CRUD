@@ -5,7 +5,7 @@ import { CreatUserValidator } from '#validators/user'
 import { SuccessService } from '#services/success_service'
 
 export default class AdminController {
-  // Create new admin (only admin can access this route via middleware)
+  // Create new admin (only admin can access this route via  middleware)
   public async create(ctx: HttpContext) {
     try {
       const payload = await ctx.request.validateUsing(CreatUserValidator)
