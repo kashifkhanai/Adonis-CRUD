@@ -26,7 +26,7 @@ export default class AdminMiddleware {
     }
 
     /**
-     * Call next method in the pipeline and return its output
+     * Call next method in the pipeline and return its  output
      */
     const output = await next()
     return output
