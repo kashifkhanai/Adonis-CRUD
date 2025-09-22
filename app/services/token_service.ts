@@ -4,9 +4,9 @@ import db from '@adonisjs/lucid/services/db'
 
 export default class TokenService {
   static async create(user: User, expiresIn: string = '60m', name: string | null = null) {
-    const token = await User.accessTokens.create(user, {
-      abilities: ['*'],
-    } as any)
+    const abilities = ['*']
+
+    const token = await User.accessTokens.create(user, abilities)
 
     let expiresAt: Date | null = null
     if (expiresIn.endsWith('m')) {
@@ -32,6 +32,7 @@ export default class TokenService {
       name,
     }
   }
+
   static async delete(user: User, identifier: string | number | bigint | BigInt) {
     if (identifier === null || identifier === undefined) {
       throw new Error('Token identifier is required')
