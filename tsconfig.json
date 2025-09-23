@@ -8,6 +8,7 @@
     "paths": {
       "#enums/*": ["enums/*"] ,
       "#helpers/*": ["helpers/*"],
+      "#interfaces/*": ["interfaces/*"]
     }
   }
 }

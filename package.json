@@ -20,6 +20,7 @@
     "#models/*": "./app/models/*.js",
     "#enums/*": "./app/enums/*.js",
     "#helpers/*": "./app/helpers/*.js",
+    "#interfaces/*": "./app/interfaces/*.js",
     "#mails/*": "./app/mails/*.js",
     "#services/*": "./app/services/*.js",
     "#listeners/*": "./app/listeners/*.js",
