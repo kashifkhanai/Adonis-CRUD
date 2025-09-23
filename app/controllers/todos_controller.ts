@@ -3,7 +3,6 @@ import type { HttpContext } from '@adonisjs/core/http'
 import {
   createTodo,
   getTodoById,
-  getTodoUser,
   getUserWithTodos,
   updateTodo,
   deleteTodo,
@@ -13,6 +12,7 @@ import { CreateTodoValidator, UpdateTodoValidator } from '#validators/todo'
 import { SuccessService } from '#services/success_service'
 import ErrorService from '#services/error_service'
 import { authorizeTodo } from '#helpers/todo_helper'
+import { getUserById } from '#services/user_service'
 
 export default class TodoController {
   // GET /todos?page=1&limit=10
@@ -51,13 +51,10 @@ export default class TodoController {
     }
   }
 
-  // GET /todos/:id/user
+  // GET /todos/user
   async showUser(ctx: HttpContext) {
     try {
-      const id = Number(ctx.params.id)
-      const todo = await getTodoById(id)
-      authorizeTodo(ctx, todo)
-      const user = await getTodoUser(id)
+      const user = await getUserById(ctx.auth.user!.id)
       return SuccessService.send(ctx, 'TODO_USER', user)
     } catch (error) {
       return ErrorService.handleError(ctx, error)
