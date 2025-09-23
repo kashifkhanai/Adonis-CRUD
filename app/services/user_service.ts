@@ -1,5 +1,5 @@
 import User from '#models/user'
-import { CreatUserInterface, UpdateUserInterface } from '#validators/user'
+import { CreateUserInterface, UpdateUserInterface } from '#interfaces/user_interfaces'
 import paginationConfig from '#config/pagination'
 
 // get all users
@@ -12,7 +12,7 @@ export const listing = async (page: number = 1, limit?: number) => {
   }
 }
 // create new user
-export const createUser = async (payload: CreatUserInterface) => {
+export const createUser = async (payload: CreateUserInterface) => {
   try {
     const user = await User.create(payload)
     return user

@@ -6,6 +6,7 @@ import { withAuthFinder } from '@adonisjs/auth/mixins/lucid'
 import { DbAccessTokensProvider } from '@adonisjs/auth/access_tokens'
 import type { HasMany } from '@adonisjs/lucid/types/relations'
 import Todo from '#models/todo'
+import { UserRole } from '#enums/role_enum'
 
 const AuthFinder = withAuthFinder(() => hash.use('scrypt'), {
   uids: ['email'],
@@ -25,9 +26,15 @@ export default class User extends compose(BaseModel, AuthFinder) {
   @column({ serializeAs: null })
   declare password: string
 
-  @column()
-  declare role: string
-
+  @column({
+    serialize: (value: number) => {
+      return {
+        id: value,
+        role: UserRole[value],
+      }
+    },
+  })
+  declare role: UserRole
   @hasMany(() => Todo)
   declare todos: HasMany<typeof Todo>
 

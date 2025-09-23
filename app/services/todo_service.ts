@@ -1,5 +1,5 @@
 import Todo from '#models/todo'
-import { CreateTodoInterface, UpdateTodoInterface } from '#validators/todo'
+import { CreateTodoInterface, UpdateTodoInterface } from '#interfaces/todo_interfaces'
 import paginationConfig from '#config/pagination'
 import { getUserById } from './user_service.js'
 // get all todos
@@ -10,6 +10,11 @@ export const listing = async (page: number = 1, limit?: number) => {
   } catch (error: any) {
     throw new Error(`Error retrieving todos: ${error.message}`)
   }
+}
+// get todos by user
+export const listingByUser = async (userId: number, page: number = 1, limit?: number) => {
+  const perPage = Math.min(limit || paginationConfig.defaultLimit, paginationConfig.maxLimit)
+  return await Todo.query().where('user_id', userId).paginate(page, perPage)
 }
 
 // create new todo

@@ -3,6 +3,12 @@
   "compilerOptions": {
     "rootDir": "./",
     "outDir": "./build",
-    "strict": true
+    "strict": true,
+    "baseUrl": ".",         
+    "paths": {
+      "#enums/*": ["enums/*"] ,
+      "#helpers/*": ["helpers/*"],
+      "#interfaces/*": ["interfaces/*"]
+    }
   }
 }

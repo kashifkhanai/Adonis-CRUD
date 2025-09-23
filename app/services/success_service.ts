@@ -30,7 +30,13 @@ export class SuccessService {
     TODO_DELETED: { message: 'Todo deleted successfully', status: 200 },
     TODO_USER: { message: 'Todo owner retrieved successfully', status: 200 },
     USER_WITH_TODOS: { message: 'User with todos retrieved successfully', status: 200 },
+    // ------------------------
+    // 🔹 Admin Management
+    // ------------------------
+    ADMIN_CREATED: { message: 'Admin user created successfully', status: 201 },
+    // ------------------------
   }
+
   /**
    *
    * @param ctx -Adonis HttpContext

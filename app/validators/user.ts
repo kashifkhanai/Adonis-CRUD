@@ -1,6 +1,5 @@
 // validator for creating new user
 import vine from '@vinejs/vine'
-import { Infer } from '@vinejs/vine/types'
 
 export const CreatUserValidator = vine.compile(
   vine.object({
@@ -16,7 +15,6 @@ export const CreatUserValidator = vine.compile(
     password: vine.string().minLength(8).maxLength(180),
   })
 )
-export type CreatUserInterface = Infer<typeof CreatUserValidator>
 
 // validator for updating existing user
 export const UpdateUserValidator = vine.compile(
@@ -26,4 +24,3 @@ export const UpdateUserValidator = vine.compile(
     password: vine.string().minLength(8).maxLength(180).optional(),
   })
 )
-export type UpdateUserInterface = Infer<typeof UpdateUserValidator>
