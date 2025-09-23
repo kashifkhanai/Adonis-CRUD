@@ -1,8 +1,7 @@
 import Todo from '#models/todo'
 import { CreateTodoInterface, UpdateTodoInterface } from '#validators/todo'
 import paginationConfig from '#config/pagination'
-import User from '#models/user'
-
+import { getUserById } from './user_service.js'
 // get all todos
 export const listing = async (page: number = 1, limit?: number) => {
   try {
@@ -40,7 +39,7 @@ export const getTodoUser = async (todoId: number) => {
     throw new Error('Todo not found')
   }
 
-  const user = await todo.related('user').query().first()
+  const user = await getUserById(todo.userId)
   if (!user) {
     throw new Error('User not found for this todo')
   }
@@ -50,11 +49,12 @@ export const getTodoUser = async (todoId: number) => {
 
 // get user with todos
 export const getUserWithTodos = async (userId: number) => {
-  const user = await User.query().where('id', userId).preload('todos').first()
+  const user = await getUserById(userId)
 
   if (!user) {
     throw new Error('User not found')
   }
+  await user.load('todos')
 
   return user
 }

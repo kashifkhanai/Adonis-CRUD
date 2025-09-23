@@ -16,5 +16,5 @@ router.get('/', async () => {
 })
 
 import '#start/routes/user_route'
-import '#start/routes/public'
+import '#start/routes/auth_routes'
 import '#start/routes/protected'
