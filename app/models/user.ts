@@ -6,16 +6,12 @@ import { withAuthFinder } from '@adonisjs/auth/mixins/lucid'
 import { DbAccessTokensProvider } from '@adonisjs/auth/access_tokens'
 import type { HasMany } from '@adonisjs/lucid/types/relations'
 import Todo from '#models/todo'
+import { UserRole } from '#enums/role_enum'
 
 const AuthFinder = withAuthFinder(() => hash.use('scrypt'), {
   uids: ['email'],
   passwordColumnName: 'password',
 })
-
-export enum UserRole {
-  USER = 0,
-  ADMIN = 1,
-}
 
 export default class User extends compose(BaseModel, AuthFinder) {
   @column({ isPrimary: true })

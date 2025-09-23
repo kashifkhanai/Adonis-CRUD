@@ -1,4 +1,4 @@
-import { UserRole } from '#models/user'
+import { UserRole } from '#enums/role_enum'
 import type { HttpContext } from '@adonisjs/core/http'
 import type { NextFn } from '@adonisjs/core/types/http'
 

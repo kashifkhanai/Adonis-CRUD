@@ -1,7 +1,7 @@
 // app/validators/todo.ts
 import vine from '@vinejs/vine'
 import { Infer } from '@vinejs/vine/types'
-import { existsInDb } from '#validators/custom_validator'
+import { existsInDb } from '#helpers/db_value_finder'
 
 // validator for creating new todo
 export const CreateTodoValidator = vine.compile(
