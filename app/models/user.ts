@@ -26,9 +26,15 @@ export default class User extends compose(BaseModel, AuthFinder) {
   @column({ serializeAs: null })
   declare password: string
 
-  @column()
+  @column({
+    serialize: (value: number) => {
+      return {
+        id: value,
+        role: UserRole[value],
+      }
+    },
+  })
   declare role: UserRole
-
   @hasMany(() => Todo)
   declare todos: HasMany<typeof Todo>
 
