@@ -8,11 +8,11 @@ router
     // Todo routes
     router.get('/', [TodoController, 'index'])
     router.post('/', [TodoController, 'store'])
+    router.get('/user', [TodoController, 'showUser'])
+    router.get('/users-todos', [TodoController, 'showUserWithTodos'])
     router.get('/:id', [TodoController, 'show'])
     router.put('/:id', [TodoController, 'update'])
     router.delete('/:id', [TodoController, 'destroy'])
-    router.get('/user', [TodoController, 'showUser'])
-    router.get('/users-todos', [TodoController, 'showUserWithTodos'])
   })
   .prefix('todos')
   .middleware([middleware.auth()])
